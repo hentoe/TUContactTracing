@@ -1,0 +1,5 @@
+personal_data
+src/__pycache__
+.idea/
+venv
+src/geckodriver.log
