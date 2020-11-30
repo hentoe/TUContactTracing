@@ -1,6 +1,9 @@
 from datetime import date
+
+from time import sleep
+
 from selenium import webdriver
-from selenium.common.exceptions import ElementNotInteractableException
+from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException
 
 from personal_data.data import data_to_submit
 
@@ -11,7 +14,15 @@ contact_tracing_url = "https://redcap.zih.tu-dresden.de/redcap/surveys/?s=CNRACR
 def get_date(data=data_to_submit):
     # Get today's date and put it as string in data_to_submit dictionary
     today = date.today()
-    date_string = f"{today.day}-{today.month}-{today.year}"
+    day = today.day
+    month = today.month
+    # check if leading zero is needed
+    if len(str(day)) == 1:
+        day = f"0{day}"
+    if len(str(month)) == 1:
+        day = f"0{month}"
+
+    date_string = f"{day}-{month}-{today.year}"
     print(date_string)
     data["tag"] = date_string
 
@@ -20,11 +31,8 @@ def fill_in_data(data=data_to_submit):
     # Find html form elements
     element_classes = browser.find_elements_by_class_name("x-form-text")
 
-    # elem_last_name = browser.find_element_by_class_name("x-form-text")
-    # elem_last_name.send_keys(data_to_submit["last_name"])
-
-
     # Fill out form
+    browser.find_element_by_class_name("date_dmy").clear()
     for element in element_classes:
         try:
             element_name = element.get_property("name")
@@ -50,7 +58,18 @@ def select_language(lang="Deutsch"):
 
 def submit():
     submit_button = browser.find_element_by_class_name("jqbutton")
-    # submit_button.click()
+    submit_button.click()
+
+
+def close_window():
+    while True:
+        try:
+            close_button = browser.find_element_by_class_name("jqbuttonmed")
+            break
+        except NoSuchElementException:
+            sleep(1)
+    close_button.click()
+    browser.close()
 
 
 if __name__ == "__main__":
@@ -62,6 +81,7 @@ if __name__ == "__main__":
     # Open browser with survey page
     browser.get(contact_tracing_url)
 
-    # get_date()
+    get_date()
     fill_in_data()
     submit()
+    close_window()
