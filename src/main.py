@@ -1,11 +1,13 @@
 from datetime import date
-
 from time import sleep
+import sys
+sys.path.extend(['/home/hendrik/PycharmProjects/TUcontact'])
 
 from selenium import webdriver
 from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException
 
 from personal_data.data import data_to_submit
+from src.log import convert_date, is_registered, write_log
 
 # URL to contact tracing survey
 contact_tracing_url = "https://redcap.zih.tu-dresden.de/redcap/surveys/?s=CNRACR4DFH"
@@ -13,17 +15,7 @@ contact_tracing_url = "https://redcap.zih.tu-dresden.de/redcap/surveys/?s=CNRACR
 
 def get_date(data=data_to_submit):
     # Get today's date and put it as string in data_to_submit dictionary
-    today = date.today()
-    day = today.day
-    month = today.month
-    # check if leading zero is needed
-    if len(str(day)) == 1:
-        day = f"0{day}"
-    if len(str(month)) == 1:
-        day = f"0{month}"
-
-    date_string = f"{day}-{month}-{today.year}"
-    print(date_string)
+    date_string = convert_date(date.today())
     data["tag"] = date_string
 
 
@@ -58,7 +50,7 @@ def select_language(lang="Deutsch"):
 
 def submit():
     submit_button = browser.find_element_by_class_name("jqbutton")
-    submit_button.click()
+    # submit_button.click()
 
 
 def close_window():
@@ -69,19 +61,26 @@ def close_window():
         except NoSuchElementException:
             sleep(1)
     close_button.click()
-    browser.close()
+    browser.quit()
 
 
 if __name__ == "__main__":
-    print("Run")
-    # Choose your favourite browser by commenting/uncommenting
-    browser = webdriver.Firefox()
-    # browser = webdriver.Chrome()
+    if not is_registered():
+        # Choose your favourite browser by commenting/uncommenting
+        browser = webdriver.Firefox()
+        # browser = webdriver.Chrome()
 
-    # Open browser with survey page
-    browser.get(contact_tracing_url)
+        # Open browser with survey page
+        browser.get(contact_tracing_url)
 
-    get_date()
-    fill_in_data()
-    submit()
-    close_window()
+        get_date()
+        fill_in_data()
+        submit()
+        # close_window()
+
+        # Add log
+        write_log()
+
+    else:
+        # Do nothing
+        pass
