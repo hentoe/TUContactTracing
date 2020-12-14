@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
         get_date()
         fill_in_data()
-        # submit()
+        submit()
         close_window()
 
         # Add log
