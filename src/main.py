@@ -1,7 +1,8 @@
 from datetime import date
 from time import sleep
+from os import environ
 import sys
-sys.path.extend(['/home/hendrik/PycharmProjects/TUcontact'])
+sys.path.extend([environ.get("PATHTOPROGRAMFOLDER")])
 
 from selenium import webdriver
 from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException
@@ -65,6 +66,9 @@ def close_window():
 
 
 if __name__ == "__main__":
+    if is_registered():
+        print("already registered")
+
     if not is_registered():
 
         options = webdriver.FirefoxOptions()
@@ -78,7 +82,7 @@ if __name__ == "__main__":
 
         get_date()
         fill_in_data()
-        submit()
+        # submit()
         close_window()
 
         # Add log

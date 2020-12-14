@@ -19,5 +19,5 @@ sleep 60
 if [ $(iwgetid -r) = "eduroam" ]
 then
   # Run contact tracing script
-  /home/hendrik/PycharmProjects/TUcontact/venv/bin/python3 /home/hendrik/PycharmProjects/TUcontact/src/main.py
+  $PATHTOPROGRAMFOLDER/venv/bin/python3 $PATHTOPROGRAMFOLDER/src/main.py
 fi

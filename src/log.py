@@ -1,8 +1,9 @@
 from datetime import date
+from os import environ
 from pathlib import Path
 import re
 
-logfile_path = "/home/hendrik/PycharmProjects/TUcontact/personal_data/"
+logfile_path = Path(environ.get("PATHTOPROGRAMFOLDER"), "personal_data")
 logfile_name = "entry_log.txt"
 
 
