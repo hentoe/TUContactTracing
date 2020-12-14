@@ -3,7 +3,7 @@
 # wait for wifi
 i=0
 while [ -z $(iwgetid -r) ]; do  # while SSID is null, do
-    echo "No Wifi"
+    # echo "No Wifi"
     i=$((i+1))
     sleep 1
     if [ $i -gt 100 ]
@@ -13,8 +13,11 @@ while [ -z $(iwgetid -r) ]; do  # while SSID is null, do
     fi
 done
 
+# wait 60 seconds
+sleep 60
+
 if [ $(iwgetid -r) = "eduroam" ]
 then
   # Run contact tracing script
-  $HOME/PycharmProjects/TUcontact/venv/bin/python3 $HOME/PycharmProjects/TUcontact/src/main.py
+  /home/hendrik/PycharmProjects/TUcontact/venv/bin/python3 /home/hendrik/PycharmProjects/TUcontact/src/main.py
 fi

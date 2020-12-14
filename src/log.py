@@ -9,12 +9,12 @@ logfile_name = "entry_log.txt"
 def is_registered(path=logfile_path, file=logfile_name):
     with open(Path(path, file), "r") as logfile:
         for line in logfile:
-            continue  # Skip to last line
-        if convert_date(line) != date.today():
-            # print("Fill out form")
-            return False
-        else:
-            return True
+            if len(line) > 0:
+                if convert_date(line) == date.today():
+                    # print("Fill out form")
+                    return True
+
+        return False
 
 
 def convert_date(date_obj):

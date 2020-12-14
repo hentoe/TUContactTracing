@@ -50,7 +50,7 @@ def select_language(lang="Deutsch"):
 
 def submit():
     submit_button = browser.find_element_by_class_name("jqbutton")
-    # submit_button.click()
+    submit_button.click()
 
 
 def close_window():
@@ -66,8 +66,11 @@ def close_window():
 
 if __name__ == "__main__":
     if not is_registered():
+
+        options = webdriver.FirefoxOptions()
+        options.add_argument("--headless")
         # Choose your favourite browser by commenting/uncommenting
-        browser = webdriver.Firefox()
+        browser = webdriver.Firefox(firefox_options=options)
         # browser = webdriver.Chrome()
 
         # Open browser with survey page
@@ -76,11 +79,7 @@ if __name__ == "__main__":
         get_date()
         fill_in_data()
         submit()
-        # close_window()
+        close_window()
 
         # Add log
         write_log()
-
-    else:
-        # Do nothing
-        pass
