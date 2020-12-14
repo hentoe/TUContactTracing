@@ -1,0 +1,12 @@
+# dictionary with data which will be submitted in survey
+data_to_submit = {"nachname": "Mustermann",
+                  "vorname": "Max",
+                  "status": "Mitarbeiter",
+                  "mail": "Email-Adresse",
+                  "telefon": "0123456789",
+                  "plz": "12345",
+                  "gebaeude": "MAR Marschnerstr. 32",
+                  "tag": "",  # "DD-MM-YY"
+                  "von": "08:30",  # "hh:mm"
+                  "bis": "18:00"  # "hh:mm"
+                  }
