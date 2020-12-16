@@ -5,7 +5,7 @@ import sys
 sys.path.extend([environ.get("PATHTOPROGRAMFOLDER")])
 
 from selenium import webdriver
-from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException
+from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, NoSuchElementException
 
 from personal_data.data import data_to_submit
 from src.log import convert_date, is_registered, write_log
@@ -51,7 +51,10 @@ def select_language(lang="Deutsch"):
 
 def submit():
     submit_button = browser.find_element_by_class_name("jqbutton")
-    submit_button.click()
+    try:
+        submit_button.click()
+    except ElementClickInterceptedException:
+        select_language()
 
 
 def close_window():
@@ -61,6 +64,8 @@ def close_window():
             break
         except NoSuchElementException:
             sleep(1)
+        except ElementClickInterceptedException:
+            select_language()
     close_button.click()
     browser.quit()
 
@@ -73,9 +78,8 @@ if __name__ == "__main__":
 
         options = webdriver.FirefoxOptions()
         options.add_argument("--headless")
-        # Choose your favourite browser by commenting/uncommenting
-        browser = webdriver.Firefox(firefox_options=options)
-        # browser = webdriver.Chrome()
+
+        browser = webdriver.Firefox(options=options)
 
         # Open browser with survey page
         browser.get(contact_tracing_url)
