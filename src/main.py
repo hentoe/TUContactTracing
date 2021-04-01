@@ -50,8 +50,13 @@ def select_language(lang="Deutsch"):
 
 
 def submit():
-    submit_button = browser.find_element_by_class_name("jqbutton")
+    while True:
+        submit_button = browser.find_element_by_class_name("jqbutton")
+        if submit_button.text == "Absenden" or submit_button.text == "Submit":
+            break
     try:
+        print(submit_button.text)
+        print(submit_button.click)
         submit_button.click()
     except ElementClickInterceptedException:
         select_language()
@@ -77,7 +82,7 @@ if __name__ == "__main__":
     if not is_registered():
 
         options = webdriver.FirefoxOptions()
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
 
         browser = webdriver.Firefox(options=options)
 
@@ -86,7 +91,7 @@ if __name__ == "__main__":
 
         get_date()
         fill_in_data()
-        submit()
+        # submit()
         close_window()
 
         # Add log

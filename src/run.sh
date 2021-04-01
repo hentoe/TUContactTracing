@@ -18,7 +18,7 @@ while [ -z $(iwgetid -r) ]; do  # while SSID is null, do
 done
 
 # wait 60 seconds to give user time to login after turning on the computer
-sleep 60
+#sleep 60
 
 if [ $(iwgetid -r) = "eduroam" ]
 then

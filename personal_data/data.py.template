@@ -4,9 +4,12 @@ data_to_submit = {"nachname": "Mustermann",
                   "status": "Mitarbeiter",
                   "mail": "Email-Adresse",
                   "telefon": "0123456789",
+                  "strasze": "Musterstrasze",
                   "plz": "12345",
+                  "ort": "Musterstadt",
                   "gebaeude": "MAR Marschnerstr. 32",
                   "tag": "",  # "DD-MM-YY"
                   "von": "08:30",  # "hh:mm"
-                  "bis": "18:00"  # "hh:mm"
+                  "bis": "18:00",  # "hh:mm"
+                  "kundenkontakt": "Nein"
                   }
